@@ -1,0 +1,80 @@
+﻿@model List<Facebook.ViewModels.PostDetailViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+
+<div class="row mb-2">
+    <div class="col">
+        @*@await Component.InvokeAsync("Post")*@
+        <form method="post" enctype="multipart/form-data" asp-action="PostStatus" asp-controller="Home">
+            <div class="card">
+                <div class="card-header bg-blue">
+                    Post Status
+                </div>
+                <div class="card-body">
+                    <textarea id="PostContent" name="PostContent" class="form-control" rows="6"></textarea>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex flex-row justify-content-around">
+                        <input type="file" class="form-control-file" id="PostImg" name="PostImg" />
+                        <button type="submit" class="btn-sm btn-primary">Post</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@{
+    if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="card my-1">
+                <div class="card-title bg-light">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="img-thumbnail rounded-circle" src=@Url.Content(@item.UserProf) style="height:60px;width:60px" />
+                        </div>
+                        <div class="col-4">
+                            @item.PostBy
+                        </div>
+                        <div class="col-6 text-right">
+                            @item.PostOn.ToString("dd-MMM-yyyy hh:mm")
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            @if (item.PostImg != "")
+                            {
+                                <img src=@Url.Content(item.PostImg) class="img-thumbnail" />
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>
+                                @item.PostContent
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <button class="btn btn-primary m-sm-1" asp-route-id=@item.ID asp-action="LikePost">Like</button>
+                        <button class="btn btn-danger m-sm-1" asp-route-id=@item.ID asp-action="DisLikePost">DisLike</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+}
+
+
+
+
+
+
+

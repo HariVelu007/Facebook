@@ -1,0 +1,39 @@
+﻿@model List<Facebook.ViewModels.FriendViewModel>
+<div class="card">
+    <div class="card-header bg-blue">
+        You may know
+    </div>
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <div class="row">
+                <div class="col">
+                    <label>No Suggetion</label>
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="col-5">
+                        <img src=@Url.Content(item.Profile) class="img-thumbnail" />
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <label>@item.UserName</label>
+                        </div>
+                        <div class="row">
+                            <a class="btn-sm btn-primary m-sm-1" asp-route-id=@item.UserID asp-action="RequestFriend" asp-controller="Friends">Add Friend</a>
+                            @*<button class="btn-sm btn-danger m-sm-1"  asp-route-id=@item.UserID asp-action="Index" asp-controller="Friends">Ignore</button>*@
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+
+
+    </div>
+</div>

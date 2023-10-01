@@ -1,0 +1,103 @@
+﻿@model Facebook.ViewModels.FriendFullViewModel
+
+<div class="row mb-2">
+    <div class="col">
+        <div class="card">
+            <div class="card-header bg-blue">
+                Search Friends
+            </div>
+            <div class="card-body">
+                <form asp-action="Index" method="post">
+                    <input class="form-control mb-2" asp-for="SrchViewModel.SearchName" name="SearchName"/>
+                    <div class="d-flex flex-row justify-content-between ">
+                        <select class="form-control-sm" asp-for="SrchViewModel.SearchType" name="SearchType">
+                            <option>Current Friends</option>
+                            <option>New Friends</option>
+                            <option>Followed</option>
+                            <option>Followers</option>
+                        </select>
+                     
+                        <button type="submit" class="btn-sm btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header bg-blue">
+        Search Results
+    </div>
+    @{
+        foreach (var item in Model.friendViewModels)
+        {
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src=@Url.Content(item.Profile) class="img-thumbnail" />
+                            </div>
+                            <div class="col-9">
+                                <div class="row my-3">
+                                    <div class="col">
+                                        @item.UserName
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        @if (@item.Status == "Friend")
+                                        {
+                                            <button class="btn-sm btn-primary" asp-route-id=@item.UserID asp-action="UnFriend">Un Friend</button>
+                                        }
+                                        else if (@item.Status == "Followers")
+                                        {
+                                            <button class="btn-sm btn-primary" asp-route-id=@item.UserID asp-action="ConfirmFriend">Confirm</button>
+                                            <button class="btn-sm btn-danger" asp-route-id=@item.UserID asp-action="DeclineFriend">Decline</button>
+                                        }
+                                        else if (@item.Status == "Followed")
+                                        {
+                                            <button class="btn-sm btn-danger" asp-route-id=@item.UserID asp-action="UnFollowFriend">Un Follow</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn-sm btn-primary" asp-route-id=@item.UserID asp-action="RequestFriend">Add Friend</button>
+                                        }
+                                        @*<a class="btn-sm btn-info" asp-route-id=@item.UserID asp-action="ViewFriend" data-toggle="">View</a>*@
+                                        <button class="btn-sm btn-info" onclick="ShowFriend('@Url.Action("ViewFriend","Friends",new { ID=@item.UserID },Context.Request.Scheme)')">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+
+</div>
+<div class="modal" id="FriendModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">View Friend</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- Modal footer -->
+
+
+        </div>
+    </div>
+</div>
+
+
+

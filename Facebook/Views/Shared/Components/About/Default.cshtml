@@ -1,0 +1,35 @@
+﻿@model Facebook.ViewModels.UserAbout
+<div class="row">
+    <div class="col">
+        <img src= @Url.Content(@TempData["profile"].ToString()) class="img-thumbnail" alt="Profile" />
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header bg-blue">
+                About
+            </div>
+            <div class="card-body">
+                <div class="row p-1">
+                    <div class="col">Name</div>
+                    <div class="col">@Model.UserName</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Age</div>
+                    <div class="col">@Model.Age</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Gender</div>
+                    <div class="col">@Model.Gender</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">Character</div>
+                    <div class="col">@Model.Character</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
